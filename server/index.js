@@ -7,6 +7,7 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
+const PORT = process.env.PORT || 8080; 
 
 app.get('/', (req, res) => {
   res.send("silvia pls comeback")
@@ -35,7 +36,7 @@ app.get('/get', async (req, res) => {
 app.put('/update/:id', async (req, res) => {
   try {
     const updateUser = await user.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.status(400).json(updateUser);
+    res.status(200).json(updateUser);
   }
   catch (error) {
     res.status(400).json({ message: error.message })
@@ -53,8 +54,7 @@ app.delete('/delete/:id', async (req, res) => {
 })
 
 
-app.listen(8080, async () => {
+app.listen(PORT, async () => {
   await connectDB()
-  console.log("http://localhost:8080")
-  console.log("server is running")
+  console.log(`Server running on ${PORT}`)
 })
